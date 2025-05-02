@@ -1,0 +1,31 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+<br><br><br><br>
+    {% for sale in sales %}
+        <div class="card">
+            <div class="card-body">
+                <h3>
+                    Customer: {{ sale.Name_of_buyer }}
+                </h3>
+                <h6>Item: {{ sale.Name_of_produce }}</h6>
+                <h6>Amount: {{ sale.Amount_paid }}</h6>
+                <h6>Quantity: {{ sale.Tonnage_in_kgs }}</h6>
+                <h2>Total Price: UGX {{ sale.get_amount_paid }}</h2>
+                <div style="flex: 1">
+                    <h6 class="card-text">
+                        Change Collected: UGX {{ sale.get_change }}
+                    </h6>
+                    <a href="{% url 'receipt_detail' sale.id %}"><input type="submit" value="Final Receipt" class="btn btn-danger"></a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <footer class="footer mt-auto py-3 text-white m-0" style="background-color: #2C2C2C;">
+        <div class="container text-center">
+            <p class="mb-0">
+                &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
+            </p>
+        </div>
+    </footer>
+{% endblock %}

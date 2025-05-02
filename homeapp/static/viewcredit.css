@@ -1,0 +1,113 @@
+main {
+    padding: 20px;
+}
+
+/* Heading Style */
+main h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #000;
+    display: inline-block;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+thead {
+    background-color: #000;
+    color: gold;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+thead th {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+    color: #333;
+}
+
+/* Zebra stripe for readability */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Last row no border */
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead {
+        display: none;
+    }
+    tbody tr {
+        margin-bottom: 15px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        padding: 10px;
+    }
+    tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 10px;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+    }
+    tbody td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #000;
+    }
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    min-height: calc(100vh - 80px); /* Adjust based on your footer height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Ensure footer always stays at bottom */
+.footer {
+    background-color: #2C2C2C !important;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: auto;
+    width: 100%;
+    font-size: 14px;
+}
+
+.footer p {
+    margin: 0;
+}

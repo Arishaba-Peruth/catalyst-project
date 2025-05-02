@@ -1,0 +1,26 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if request.user.is_authenticated %}
+    <div class="flex item-center space-x-4 px-6">
+        <a href=""><input type="submit">Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}"><input type="button">Login</a>
+        {% endif %}
+    </div>
+    {% block content %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Register" class="bg-blue-500 hover:bg-blue-700 text-">
+    </form>
+    {% endblock %}
+</body>
+</html>

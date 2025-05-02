@@ -1,0 +1,140 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'dashboard1.css' %}">
+<body style="height: 100%; margin: 0; padding: 0; display: flex; flex-direction: column;">
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Manager's Dashboard</h3>
+        </div>
+        <div class="sidebar-menu">
+            <a href="{% url 'allstock' %}" class="menu-item">
+                <i class="fas fa-box"></i> View Stock
+            </a>
+
+            <a href="{% url 'createstock' %}" class="menu-item">
+                <i class="fas fa-box"></i>Create New Stock
+            </a>
+
+            <a href="{% url 'allsales' %}" class="menu-item">
+                <i class="fas fa-shopping-cart"></i> Record Sales
+            </a>
+
+            <a href="{% url 'deferredpayment' %}" class="menu-item">
+                <i class="fas fa-shopping-cart"></i> Record Credit Sale
+            </a>
+            <a href="{% url 'receipt' %}" class="menu-item">
+                <i class="fas fa-file-invoice"></i> Receipts
+            </a>
+
+            <a href="{% url 'logout' %}" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+
+    <div class="main-content">
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-archive"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Total Products</h3>
+                    <p>5</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Today's Sales</h3>
+                    <p>{{ recent_sales.count }}</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon warning">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Low Stock Items</h3>
+                    <p>{{ low_stock_items.count }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <div class="section-header">
+                <h2>Recent Sales</h2>
+                <a href="{% url 'allsales' %}" class="view-all">View All</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity (kg)</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sale in recent_sales %}
+                        <tr>
+                            <td>{{ sale.Name_of_produce }}</td>
+                            <td>{{ sale.Tonnage_in_kgs }}</td>
+                            <td>UGX {{ sale.Amount_paid }}</td>
+                            <td>{{ sale.Date_time|date:"M d, Y" }}</td>
+                            <td>
+                                <span class="status {% if sale.method_of_payment == 'Cash' %}paid{% else %}pending{% endif %}">
+                                    {{ sale.method_of_payment }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Stock Status -->
+        <div class="stock-status">
+            <div class="section-header">
+                <h2>Stock Status</h2>
+                <a href="{% url 'allstock' %}" class="view-all">View All</a>
+            </div>
+            <div class="stock-grid">
+                {% for stock in combined_stocks %}
+                <div class="stock-card">
+                    <div class="stock-info">
+                        <h4>{{ stock.name }}</h4>
+                        <p class="quantity">Total: {{ stock.total_quantity }} kg</p>
+                        <div class="branch-quantities">
+                            {% for branch_name, quantity in stock.branches.items %}
+                            <div class="stock-branch-quantity">
+                                <span class="stock-branch-name">{{ branch_name }}:</span>
+                                <span class="stock-branch-amount">{{ quantity }} kg</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="stock-status-indicator {% if stock.total_quantity < 100 %}low{% else %}good{% endif %}">
+                        {% if stock.total_quantity < 100 %}Low Stock{% else %}In Stock{% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

@@ -1,0 +1,16 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<main>
+    <link rel="stylesheet" href="{% static 'addstock.css' %}">
+    <div class="container">
+        <form action="" method="POST">
+            <h1 class="text-center">ADD NEW STOCK</h1><br>
+            {% csrf_token %}
+            {{ form | crispy }}
+            <br><input type="submit" class="btn btn-secondary btn">
+        </form>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+    <main>
+        <link rel="stylesheet" href="{% static 'allsales.css' %}">
+        <div class="mb-4">
+            <!-- Remove the broken link and keep only the proper button -->
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#selectStockModal">
+                Record New Transaction
+            </button>
+        </div>
+
+        <!-- Add modal for stock selection -->
+        <div class="modal fade" id="selectStockModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Select Stock Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group">
+                            {% for stock in stocks %}
+                            <a href="{% url 'addsales' stock.id %}" class="list-group-item list-group-item-action">
+                                {{ stock.Name_of_produce }} - {{ stock.Tonnage_in_kgs }}kg available
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-hover table-bordered table-striped shadow" class="salestables">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name of produce</th>
+                    <th>Tonnage Sold(kgs)</th>
+                    <th>Amount Received</th>
+                    <th>Payment Method</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Sale in sales %}
+                <tr>
+                    <td>{{ Sale.Name_of_produce }}</td>
+                    <td>{{ Sale.Tonnage_in_kgs }}</td>
+                    <td>{{ Sale.Amount_paid }}</td>
+                    <td>{{ Sale.method_of_payment }}</td>
+                    <td>
+                        <a href="{% url 'view' pk=Sale.pk %}" class="text-primary" style="text-decoration: none;">View</a>
+                        <a href="{% url 'edit' pk=Sale.pk %}" class="text-dark" style="text-decoration: none;">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}

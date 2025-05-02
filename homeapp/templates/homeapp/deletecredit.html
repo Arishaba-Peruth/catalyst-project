@@ -1,0 +1,18 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+    <main class="container">
+        <br><br>
+        <form method="POST" class="text-center">
+            {% csrf_token %}
+            <br><br><br><p>Are you sure you want to delete the transaction for <strong>{{ credit_to_delete.Name_of_buyer }}</strong>?
+                This action cannot be undone.
+            </p>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-danger">Yes, Delete.</button>
+                <a href="{% url 'deletecredit' pk=credit_to_delete.id %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+
+    </main>
+{% endblock %}

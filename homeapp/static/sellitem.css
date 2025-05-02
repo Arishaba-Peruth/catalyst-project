@@ -1,0 +1,43 @@
+/* salesform.css */
+
+/* Style the outer form container */
+form {
+    background-color: #fdfdfd;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Heading style */
+form h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #156c3d; /* matches your nav green */
+    margin-bottom: 20px;
+}
+
+/* Crispy form field styling override */
+form .form-group {
+    margin-bottom: 20px;
+}
+
+/* Submit button styling */
+form input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #156c3d;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #12823a;
+    cursor: pointer;
+}

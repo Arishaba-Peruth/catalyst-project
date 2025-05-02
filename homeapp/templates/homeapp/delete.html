@@ -1,0 +1,17 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+    <main class="container">
+        <form method="POST" class="text-center">
+            {% csrf_token %}
+            <br><br><br><p>Are you sure you want to delete the transaction for <strong>{{ details.Name_of_buyer }}</strong>?
+                This action cannot be undone.
+            </p>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-danger">Yes, Delete.</button>
+                <a href="{% url 'view' pk=details.pk %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </main>
+{% endblock %}

@@ -1,0 +1,59 @@
+
+/* Centered card styling */
+.card-body {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 40px 30px;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+}
+
+/* Profile Icon */
+.profile-icon {
+    display: block;
+    margin: 0 auto 20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Headings */
+.card-body h5, .card-body h6 {
+    font-family: 'Segoe UI', sans-serif;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Inputs */
+.card-body input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    background-color: #f0f6ff;
+}
+
+/* Submit button */
+.card-body button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.card-body button[type="submit"]:hover {
+    background-color: #1b5e20;
+    cursor: pointer;
+}

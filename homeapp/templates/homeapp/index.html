@@ -1,0 +1,14 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="d-flex flex-column min-vh-100">
+    <div class="text-center text-white py-5 flex-grow-1 w-100 m-0 p-0" style="background-image: url('/static/back1.webp'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 100%; margin: 0; padding: 0;">
+        <div class="container py-5">
+            <br><br><h1 class="display-3 fw-bold" style="color: brown;">Welcome to Karibu Grocery System</h1>
+            <p class="lead">Happy Hoe Store</p>
+            <a href="/login" class="btn btn-outline-light btn-lg mt-3 px-4">Get Started</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

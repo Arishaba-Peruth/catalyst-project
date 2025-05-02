@@ -1,0 +1,28 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+    <main>
+        <link rel="stylesheet" href="{% static 'stockdetail.css' %}">
+        <br><br><br>
+        <div>
+            <a href="{% url 'sell_item' stock.id %}"><input type="submit" value="Sell Item"></a>
+            <a href="{% url 'update_stock' stock.id %}"><input type="submit" value="Add Quantity"></a>
+        </div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name of produce</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ stock.Name_of_produce }}</td>
+                    <td>{{ stock.Tonnage_in_kgs }}</td>
+                    <td>{{ stock.Unit_price }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+{% endblock %}

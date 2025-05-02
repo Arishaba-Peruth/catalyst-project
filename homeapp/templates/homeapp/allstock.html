@@ -1,0 +1,35 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'allstock.css' %}">
+    <br><br>
+    <main>
+        <br><h1 style="text-align: center; color: brown;">Stock Status</h1>
+        <div class="stock-status-table-wrapper">
+            <table class="stock-status-table">
+                <thead>
+                    <tr>
+                        <th>Name of Produce</th>
+                        <th>Tonnage(kgs)</th>
+                        <th>Branch</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in stocks %}
+                    <tr>
+                        <td>{{ stock.Name_of_produce }}</td>
+                        <td>{{ stock.Tonnage_in_kgs }}</td>
+                        <td>{{ stock.Branch }}</td>
+                        <td>
+                            <a href="{% url 'stock_detail' stock.id %}">
+                                <input type="submit" value="Check Out" class="checkout-btn">
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+<main style="background-image: url('/static/logb.avif'); background-size:cover; min-height:100vh;">
+  <br><br>
+  <div class="container d-flex justify-content-center align-items-center min-height: 100vh;">
+    <div class="card p-3 shadow" style="
+      width: 100%; 
+      max-width: 350px; 
+      background-color: rgba(255, 255, 255, 0.2); 
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);">
+      <div class="text-center">
+        <img src="{% static 'signicon11.jpg' %}" alt="User Icon" class="mb-3 rounded-circle" style="width: 50px; height: 50px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <h5 style="color: #333; font-weight: 600;">Hello! Welcome</h5>
+        <h6 class="text-muted" style="color: #555 !important;">Please enter the details to login.</h6>
+      </div>
+      <form method="POST" class="mt-4" action="{% url 'login' %}">
+        {% if error %}
+          <div class="alert alert-danger" role="alert">
+            {{ error }}
+          </div>
+        {% endif %}
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" name="Username" class="form-control" placeholder="Your name" required style="background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.3);">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name="Password" class="form-control" placeholder="Password" required style="background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.3);">
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary" style="background: green; border: none; backdrop-filter: blur(5px);">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+{% endblock %}

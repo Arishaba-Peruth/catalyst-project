@@ -1,0 +1,22 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.5-dist/css/bootstrap.css' %}">
+</head>
+<body>
+    {% block content %}
+    <br><br><br><br>
+    <div class="body container-fluid container">
+        <h2 class="text-center">You have successfully logged out. Thanks </h2>
+        <h6 class="text-center"><a href="{% url 'login' %}"><input type="submit" value="Login Again" class="btn btn-info btn-danger"></a></h6>
+    </div>
+    {% endblock %}
+
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.5-dist/css/bootstrap.css' %}"> 
+</body>
+</html>

@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Director's Dashboard - Karibu Groceries</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.5-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard1.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Director's Dashboard</h3>
+            </div>
+            <div class="sidebar-menu">
+                <a href="{% url 'logout' %}" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1>Dashboard</h1>
+            <!-- Stats Cards -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Credit Sales by Branch</h3>
+                        <div class="branch-details">
+                            {% for branch_name, amount in branch_deferred.items %}
+                            <div class="branch-row">
+                                <span class="details-branch-name">{{ branch_name }}:</span>
+                                <span class="amount">UGX {{ amount|floatformat:0 }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Total Sales by Branch</h3>
+                        <div class="branch-details">
+                            {% for branch_name, amount in branch_sales.items %}
+                            <div class="branch-row">
+                                <span class="branch-name">{{ branch_name }}:</span>
+                                <span class="amount">UGX {{ amount|floatformat:0 }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <div class="section-header">
+                    <h2><b>Recent Sales</b></h2>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity (kg)</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sale in recent_sales %}
+                            <tr>
+                                <td>{{ sale.Name_of_produce }}</td>
+                                <td>{{ sale.Tonnage_in_kgs }}</td>
+                                <td>UGX {{ sale.Amount_paid }}</td>
+                                <td>{{ sale.Date_time|date:"M d, Y" }}</td>
+                                <td>
+                                    <span class="status {% if sale.method_of_payment == 'Cash' %}paid{% else %}pending{% endif %}">
+                                        {{ sale.method_of_payment }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">
+                &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

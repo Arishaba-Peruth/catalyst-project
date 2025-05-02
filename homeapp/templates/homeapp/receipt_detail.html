@@ -1,0 +1,31 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+<main>
+    <div class="container my-4 d-flex justify-content-center">
+        <div class="receipt-card shadow p-4 rounded-4 w-100" style="max-width: 400px;">
+            <div class="mb-3 boreder-bottom pb-2">
+                <h4>🧾 Customer: {{ receipt.Name_of_buyer|default:"N/A" }}</h4>
+            </div>
+            <p class="md-1 text-muted">Item: {{ receipt.Name_of_produce }}</p>
+            <p class="md-1 text-muted">Amount: {{ receipt.Amount_paid }}</p>
+            <p class="md-1 text-muted">Quantity: {{ receipt.Tonnage_in_kgs }}</p>
+        </div>
+        <div class="total-section mb-3">
+            <h3 class="text-dark fw-semibold">Total Price: <span class="text-success">UGX {{ receipt.get_amount_paid }}</span></h3>
+            <p class="text-muted">Change: UGX {{ receipt.get_change }}</p>
+        </div>
+        <div class="text-end">
+            <button class="btn fancy-button" onclick="window.print()">🖨️ Print Receipt</button>
+        </div>
+    </div>
+    <footer class="footer mt-auto py-3 text-white m-0" style="background-color: #2C2C2C;">
+        <div class="container text-center">
+            <p class="mb-0">
+                &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
+            </p>
+        </div>
+    </footer>
+</main>
+{% endblock %}

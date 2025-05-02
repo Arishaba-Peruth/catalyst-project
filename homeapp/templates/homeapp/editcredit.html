@@ -1,0 +1,81 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+<br><br>
+<link rel="stylesheet" href="{% static 'editcredit.css' %}">
+<main>
+    <h1>Edit Credit Transaction</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Name of Buyer</label>
+            <input type="text" name="Name_of_buyer" value="{{ edit_credit.Name_of_buyer }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nin</label>
+            <input type="text" name="Nin" value="{{ edit_credit.Nin }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input type="text" name="Location" value="{{ edit_credit.Location }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Amount Due</label>
+            <input type="text" name="Amount_due" value="{{ edit_credit.Amount_due }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Contact *</label>
+            <input type="number" name="Contact" value="{{ edit_credit.Contact }}" class="form-control" min="0" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Sales Agent</label>
+            <input type="text" name="Sales_agent_name" value="{{ edit_credit.Sales_agent_name }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Due Date</label>
+            <input type="date" name="Due_date" value="{{ edit_credit.Due_date|date:'Y-m-d' }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Produce Name</label>
+            <input type="text" name="Produce_name" value="{{ edit_credit.Produce_name }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Produce Type</label>
+            <input type="text" name="Produce_type" value="{{ edit_credit.Produce_type }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Branch</label>
+            <input type="text" name="Branch" value="{{ edit_credit.Branch }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Tonnage</label>
+            <input type="text" name="Tonnage" value="{{ edit_credit.Tonnage }}" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Dispatch Date</label>
+            <input type="date" name="Date_of_dispatch" value="{{ edit_credit.Date_of_dispatch|date:'Y-m-d' }}" class="form-control">
+          </div>
+
+          <button type="submit" class="btn btn-dark w-100">Edit Credit Transaction</button>
+    </form>
+    <footer class="footer mt-auto py-3 text-white m-0" style="background-color: #2C2C2C;">
+      <div class="container text-center">
+          <p class="mb-0">
+              &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
+          </p>
+      </div>
+  </footer>
+  
+</main>
+{% endblock %}

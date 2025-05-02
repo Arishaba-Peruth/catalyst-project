@@ -1,0 +1,53 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'view.css' %}">
+<br><br><br>
+<main class="container my-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-dark text-white text-center">
+            <h1 class="mb-0">Transaction Details</h1>
+        </div>
+        <div class="card-body bg-light">
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>ID:</strong>
+                    <p>{{ details.id }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong>Name of Produce:</strong>
+                    <p>{{ details.Name_of_produce }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong>Tonnage (kgs):</strong>
+                    <p>{{ details.Tonnage_in_kgs }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong>Amount Paid:</strong>
+                    <p>{{ details.Amount_paid }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong>Sales Agent:</strong>
+                    <p>{{ details.Sales_agent_name }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong>Date and Time:</strong>
+                    <p>{{ details.Date_time }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong>Buyer's Name:</strong>
+                    <p>{{ details.Name_of_buyer }}</p>
+                </div>
+                <div class="col-md-6">
+                    <strong>Payment Method:</strong>
+                    <p>{{ details.method_of_payment }}</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4 gap-3">
+                <a href="/edit/{{ details.id }}" class="btn btn-outline-primary">Edit</a>
+                <a href="/delete/{{ details.id }}" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

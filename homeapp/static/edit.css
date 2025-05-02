@@ -1,0 +1,59 @@
+/* editform.css */
+
+/* Page Container */
+.container {
+    max-width: 750px;
+    margin: 40px auto;
+  }
+  
+  /* Header Styling */
+  .container h1 {
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 700;
+    color: #0a3c2e;
+    text-shadow: 1px 1px #c3e5dd;
+  }
+  
+  /* Form box */
+  form {
+    background-color: #ffffff;
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Labels */
+  .form-label {
+    font-weight: 600;
+    color: #14532d;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Inputs */
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+  }
+  
+  /* Button */
+  .btn-dark {
+    background-color: #156c3d;
+    border: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-dark:hover {
+    background-color: #12823a;
+  }
+  

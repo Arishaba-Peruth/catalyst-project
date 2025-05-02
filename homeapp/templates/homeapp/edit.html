@@ -1,0 +1,64 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'edit.css' %}" />
+<div class="container mt-9 pt-9">  <!-- Increased margin -->
+  <br><br><h1 class="mb-4 text-center">Edit Transaction</h1>
+  <form method="POST" class="p-4 border rounded shadow bg-light">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      <label class="form-label">Name of Produce</label>
+      <select name="Name_of_produce" class="form-control">
+      {% for stock in stock_list %}
+        <option value="{{ stock.id }}" {% if stock.id == edit_details.Name_of_produce.id %}selected
+      {% endif %}>
+        {{ stock.Name_of_produce }}
+      </option>
+      {% endfor %}
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Item Name</label>
+      <input type="text" name="item_name" value="{{ edit_details.item_name }}" class="form-control">
+    </div>
+
+    
+    <div class="mb-3">
+      <label class="form-label">Tonnage in Kgs</label>
+      <input type="text" name="Tonnage_in_kgs" value="{{ edit_details.Tonnage_in_kgs }}" class="form-control">
+    </div>
+    
+    <div class="mb-3">
+      <label class="form-label">Amount Paid</label>
+      <input type="text" name="Amount_paid" value="{{ edit_details.Amount_paid }}" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Sales Agent Name</label>
+      <input type="text" name="Sales_agent_name" value="{{ edit_details.Sales_agent_name }}" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Date & Time</label>
+      <input type="text" name="Date_time" value="{{ edit_details.Date_time }}" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Name of Buyer</label>
+      <input type="text" name="Name_of_buyer" value="{{ edit_details.Name_of_buyer }}" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Method of Payment</label>
+      <input type="text" name="method_of_payment" value="{{ edit_details.method_of_payment }}" class="form-control">
+    </div>
+    
+
+    <!-- other fields -->
+
+    <button type="submit" class="btn btn-dark w-100">Edit</button>
+  </form>
+</div>
+{% endblock %}

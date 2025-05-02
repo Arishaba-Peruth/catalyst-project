@@ -1,0 +1,80 @@
+/* transaction_details.css */
+
+/* Card Styling */
+.card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #dee2e6;
+  }
+  
+  /* Card Header */
+  .card-header {
+    background: linear-gradient(to right, #14532d, #198754);
+    color: white;
+    padding: 1.5rem 1rem;
+    border-bottom: none;
+  }
+  
+  .card-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Card Body */
+  .card-body {
+    background-color: #f8f9fa;
+    padding: 2rem;
+  }
+  
+  /* Field Titles */
+  .card-body strong {
+    color: #14532d;
+    font-size: 1rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  
+  /* Field Values */
+  .card-body p {
+    font-size: 1rem;
+    color: #212529;
+    margin-bottom: 1rem;
+    padding: 8px 12px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+  }
+  
+  /* Buttons */
+  .btn-outline-primary, .btn-outline-danger {
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #198754;
+    color: white;
+    border-color: #198754;
+  }
+  
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+  }
+  
+  /* Responsive Gap Fix */
+  @media (max-width: 576px) {
+    .d-flex.gap-3 {
+      flex-direction: column;
+      gap: 1rem !important;
+    }
+  }
+  

@@ -1,0 +1,47 @@
+{% extends 'homeapp/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'viewcredit.css' %}">
+<main>
+    <h1>Credit Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name of Buyer</th>
+                <th>Nin</th>
+                <th>Location</th>
+                <th>Amount Due</th>
+                <th>Contact</th>
+                <th>Sales Agent</th>
+                <th>Produce Name</th>
+                <th>Due Date</th>
+                <th>Produce Type</th>
+                <th>Tonnage</th>
+                <th>Branch</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ creditdetails.Name_of_buyer }}</td>
+                <td>{{ creditdetails.Nin }}</td>
+                <td>{{ creditdetails.Location }}</td>
+                <td>{{ creditdetails.Amount_due }}</td>
+                <td>{{ creditdetails.Contact }}</td>
+                <td>{{ creditdetails.Sales_agent_name }}</td>
+                <td>{{ creditdetails.Produce_name }}</td>
+                <td>{{ creditdetails.Due_date }}</td>
+                <td>{{ creditdetails.Produce_type }}</td>
+                <td>{{ creditdetails.Tonnage }}</td>
+                <td>{{ creditdetails.Branch }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <footer class="footer mt-auto py-3 text-white m-0" style="background-color: #2C2C2C;">
+        <div class="container text-center">
+            <p class="mb-0">
+                &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
+            </p>
+        </div>
+    </footer>
+</main>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Agent Dashboard - Karibu Groceries</title>
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.5-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard1.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body style="height: 100%; margin: 0; padding: 0; display: flex; flex-direction: column;">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Sales Agent Dashboard</h3>
+            </div>
+            <div class="sidebar-menu">
+                <a href="{% url 'allstock' %}" class="menu-item">
+                    <i class="fas fa-box"></i> View Stock
+                </a>
+
+                <a href="{% url 'deferredpayment' %}" class="menu-item">
+                    <i class="fas fa-shopping-cart"></i> Deferred Payment
+                </a>
+                <a href="{% url 'receipt' %}" class="menu-item">
+                    <i class="fas fa-file-invoice"></i> Receipts
+                </a>
+                <a href="{% url 'logout' %}" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+
+        <div class="main-content">
+            <!-- Stats Cards -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-archive"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Deferred Amount</h3>
+                        <p>UGX {{ total_deferred|floatformat:0 }}</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Sales Amount</h3>
+                        <p>UGX {{ total_sales|floatformat:0 }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <div class="section-header">
+                    <h2>Recent Sales</h2>
+                    <a href="{% url 'allsales' %}" class="view-all">View All</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity (kg)</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sale in sales %}
+                            <tr>
+                                <td>{{ sale.Name_of_produce }}</td>
+                                <td>{{ sale.Tonnage_in_kgs }}</td>
+                                <td>UGX {{ sale.Amount_paid }}</td>
+                                <td>{{ sale.Date_time|date:"M d, Y" }}</td>
+                                <td>
+                                    <span class="status {% if sale.method_of_payment == 'Cash' %}paid{% else %}pending{% endif %}">
+                                        {{ sale.method_of_payment }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">
+                &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
