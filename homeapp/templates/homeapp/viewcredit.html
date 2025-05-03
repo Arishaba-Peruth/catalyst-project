@@ -1,10 +1,10 @@
 {% extends 'homeapp/base.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'viewcredit.css' %}">
-<main>
+<link rel="stylesheet" href="{% static '' %}">
+<main style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
     <h1>Credit Details</h1>
-    <table>
+    <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
                 <th>Name of Buyer</th>
@@ -36,12 +36,13 @@
             </tr>
         </tbody>
     </table>
-    <footer class="footer mt-auto py-3 text-white m-0" style="background-color: #2C2C2C;">
-        <div class="container text-center">
-            <p class="mb-0">
-                &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
-            </p>
-        </div>
-    </footer>
+    <div>
+        {% if user.is_manager %}
+        <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
+        {% endif %}
+        {% if user.is_salesagent %}
+        <a href="{% url 'allsales' %}"><button class="btn btn-success">Previous</button></a>
+        {% endif %}
+    </div>
 </main>
 {% endblock %}

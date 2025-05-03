@@ -1,7 +1,7 @@
 {% extends 'homeapp/base.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'edit.css' %}" />
+<link rel="stylesheet" href="{% static '' %}" />
 <div class="container mt-9 pt-9">  <!-- Increased margin -->
   <br><br><h1 class="mb-4 text-center">Edit Transaction</h1>
   <form method="POST" class="p-4 border rounded shadow bg-light">
@@ -58,7 +58,15 @@
 
     <!-- other fields -->
 
-    <button type="submit" class="btn btn-dark w-100">Edit</button>
+    <button type="submit" class="btn btn-success" style="color: gold;">Edit</button>
   </form>
+</div>
+<div style="margin: 20px;">
+  {% if user.is_manager %}
+  <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
+  {% endif %}
+  {% if user.is_salesagent %}
+  <a href="{% url 'allsales' %}"><button class="btn btn-success">Previous</button></a>
+  {% endif %}
 </div>
 {% endblock %}

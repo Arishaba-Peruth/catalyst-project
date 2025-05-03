@@ -1,15 +1,15 @@
 {% extends 'homeapp/base.html' %}
 {% load static %}
 {% block content %}
-    <link rel="stylesheet" href="{% static 'deferredpayment.css' %}">
-    <br><br><br>
-    <main>
+    <link rel="stylesheet" href="{% static '' %}">
+    <br><br>
+    <main style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
         <div class="deferred-header">
-            <h1>Credit Sales Records</h1>
-            <a href="{% url 'add_deferredpayment' %}" class="add-credit-btn">Add New Credit Sale</a>
-        </div>
+            <h1 style="text-align: center;">Credit Sales Records</h1>
+            <a href="{% url 'add_deferredpayment' %}" class="add-credit-btn"><button class="btn btn-success" style="color: gold;">Add New Credit Sale</button></a>
+        </div><br>
         <div class="credit-table-wrapper">
-            <table class="credit-status-table">
+            <table class="table table-hover table-bordered table-striped shadow">
                 <thead>
                     <tr>
                         <th>Buyer Name</th>
@@ -22,7 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for payment in deferred_payments %}
+                    {% for payment in page_obj %}
                     <tr>
                         <td>{{ payment.Name_of_buyer }}</td>
                         <td>{{ payment.Nin }}</td>
@@ -31,9 +31,9 @@
                         <td>{{ payment.Produce_name }}</td>
                         <td>{{ payment.Tonnage }}</td>
                         <td>
-                            <a href="{% url 'viewcredit' pk=payment.id %}" class="view-btn">View</a>
-                            <a href="{% url 'editcredit' pk=payment.id %}" class="edit-btn">Edit</a>
-                            <a href="{% url 'deletecredit' pk=payment.id %}" class="delete-btn">Delete</a>
+                            <a href="{% url 'viewcredit' pk=payment.id %}" class="view-btn" style="color:blue; text-decoration: none;">View</a>
+                            <a href="{% url 'editcredit' pk=payment.id %}" class="edit-btn" style="color: blue; text-decoration: none;">Edit</a>
+                            <a href="{% url 'deletecredit' pk=payment.id %}" class="delete-btn" style="color: red; text-decoration: none;">Delete</a>
                         </td>
                     </tr>
                     {% empty %}
@@ -43,6 +43,43 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="pagination-container">
+            <div aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div>
+            {% if user.is_manager %}
+            <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
+            {% endif %}
+            {% if user.is_salesagent %}
+            <a href="{% url 'allsales' %}"><button class="btn btn-success">Previous</button></a>
+            {% endif %}
         </div>
     </main>
 {% endblock %}

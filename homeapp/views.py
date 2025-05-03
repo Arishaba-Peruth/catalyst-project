@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -104,16 +105,22 @@ def signup(request):
 
 @login_required
 def allsales(request):
-    sales = Sale.objects.all().order_by('-id')
-    stocks = Stock.objects.all()  # Get all stocks to choose from
+    all_transactions = Sale.objects.all().order_by('-id')
+    stocks = Stock.objects.all()  # Get all stocks for the modal
+    paginator = Paginator(all_transactions, 5)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'sales': sales,
-        'stocks': stocks  # Pass stocks to template
+        'page_obj': page_obj,
+        'stocks': stocks  # Add stocks to context
     }
-    return render(request, 'homeapp/allsales.html', context) 
+    return render(request, 'homeapp/allsales.html', context)
 
 @login_required
 def addstock(request, pk):
+    if not request.user.is_manager:
+        return HttpResponseForbidden("You do not have permission to access this page.")
     sold_item = Stock.objects.get(id=pk)
     form = UpdateStockForm(request.POST)
 
@@ -169,8 +176,12 @@ def addsales(request, pk):
             
 @login_required
 def deferredpayment(request):
-    deferred_payments = Deferred_Payment.objects.all().order_by('-Due_date')
-    return render(request, 'homeapp/deferredpayment.html', {'deferred_payments': deferred_payments})
+    all_deferred_payments = Deferred_Payment.objects.all().order_by('-Due_date')
+    paginator = Paginator(all_deferred_payments, 5)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'homeapp/deferredpayment.html', {'page_obj': page_obj})
 
 @login_required
 def add_deferredpayment(request):
@@ -280,7 +291,7 @@ def manager(request):
     combined_stocks = list(grouped_stocks.values())
     
     # Get recent sales, limited to last 10
-    recent_sales = Sale.objects.all().order_by('-Date_time')[:10]
+    recent_sales = Sale.objects.all().order_by('-Date_time')[:4]
     
     # Get low stock items (less than 100kg)
     low_stock_items = Stock.objects.filter(Tonnage_in_kgs__lt=100)
@@ -348,6 +359,8 @@ def deletecredit(request, pk):
 
 @login_required
 def createstock(request):
+    if not request.user.is_manager:
+        return HttpResponseForbidden("You do not have permission to access this page.")
     if request.method == 'POST':
         form = AddStockForm(request.POST)
         if form.is_valid():
@@ -398,9 +411,9 @@ def director(request):
         ).aggregate(total=Sum('Amount_due'))['total'] or 0
         branch_deferred[branch.branch_name] = deferred_total
         
-        # Calculate total sales for each branch by joining through Stock
+        # Calculate total sales for each branch
         sales_total = Sale.objects.filter(
-            Name_of_produce__Branch=branch
+            Name_of_produce__in=Stock.objects.filter(Branch=branch)
         ).aggregate(total=Sum('Amount_paid'))['total'] or 0
         branch_sales[branch.branch_name] = sales_total
     
@@ -409,6 +422,8 @@ def director(request):
     
     # Get all stock items grouped by product name
     all_stocks = Stock.objects.all()
+    
+    # Group stocks by product name
     grouped_stocks = {}
     for stock in all_stocks:
         if stock.Name_of_produce not in grouped_stocks:
@@ -439,6 +454,28 @@ def logout_view(request):
     logout(request)
     return render(request, 'homeapp/logout.html')
 
+#view pagination for all sales to allow only 5 transactions per page
+def allsales(request):
+    all_transactions = Sale.objects.all().order_by('-id')
+    stocks = Stock.objects.all()  # Get all stocks for the modal
+    paginator = Paginator(all_transactions, 5)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj': page_obj,
+        'stocks': stocks  # Add stocks to context
+    }
+    return render(request, 'homeapp/allsales.html', context)
+
+# view for all deferred payments with pagination to allow only 5 transactions per page
+def deferredpayment(request):
+    all_deferred_payments = Deferred_Payment.objects.all().order_by('-Due_date')
+    paginator = Paginator(all_deferred_payments, 5)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'homeapp/deferredpayment.html', {'page_obj': page_obj})
 
 
 

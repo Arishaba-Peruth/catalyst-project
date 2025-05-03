@@ -1,13 +1,14 @@
 {% extends 'homeapp/base.html' %}
 {% load static %}
 {% block content %}
-    <main>
-        <link rel="stylesheet" href="{% static 'allsales.css' %}">
-        <div class="mb-4">
-            <!-- Remove the broken link and keep only the proper button -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#selectStockModal">
+<main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
+        <link rel="stylesheet" href="{% static '' %}">
+        <br>
+        <div class="buttons-container">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#selectStockModal" style="color: gold;">
                 Record New Transaction
             </button>
+            <a href="{% url 'deferredpayment' %}" class="add-credit-btn"><button class="btn btn-success" style="color: gold;">Credit Sales</button></a>
         </div>
 
         <!-- Add modal for stock selection -->
@@ -31,8 +32,9 @@
             </div>
         </div>
 
+        <br>
         <table class="table table-hover table-bordered table-striped shadow" class="salestables">
-            <thead class="table-dark">
+            <thead class="bg-primary text-white">
                 <tr>
                     <th>Name of produce</th>
                     <th>Tonnage Sold(kgs)</th>
@@ -42,19 +44,57 @@
                 </tr>
             </thead>
             <tbody>
-                {% for Sale in sales %}
+                {% for sale in page_obj %}
                 <tr>
-                    <td>{{ Sale.Name_of_produce }}</td>
-                    <td>{{ Sale.Tonnage_in_kgs }}</td>
-                    <td>{{ Sale.Amount_paid }}</td>
-                    <td>{{ Sale.method_of_payment }}</td>
+                    <td>{{ sale.Name_of_produce }}</td>
+                    <td>{{ sale.Tonnage_in_kgs }}</td>
+                    <td>{{ sale.Amount_paid }}</td>
+                    <td>{{ sale.method_of_payment }}</td>
                     <td>
-                        <a href="{% url 'view' pk=Sale.pk %}" class="text-primary" style="text-decoration: none;">View</a>
-                        <a href="{% url 'edit' pk=Sale.pk %}" class="text-dark" style="text-decoration: none;">Edit</a>
+                        <a href="{% url 'view' pk=sale.pk %}" class="text-primary" style="text-decoration: none;">View</a>
+                        <a href="{% url 'edit' pk=sale.pk %}" class="text-dark" style="text-decoration: none;">Edit</a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-    </main>
+        
+        <div class="pagination-container">
+            <div aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div>
+            {% if user.is_manager %}
+            <a href="{% url 'manager' %}"><button class="btn btn-success">Back</button></a>
+            {% endif %}
+            {% if user.is_salesagent %}
+            <a href="{% url 'salesagent' %}"><button class="btn btn-success">Previous</button></a>
+            {% endif %}
+        </div>
+</main>
 {% endblock %}

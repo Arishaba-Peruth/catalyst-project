@@ -1,40 +1,10 @@
+{% extends 'homeapp/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en" style="height: 100%;">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Agent Dashboard - Karibu Groceries</title>
-    <link rel="stylesheet" href="{% static 'bootstrap-5.3.5-dist/css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard1.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-</head>
-<body style="height: 100%; margin: 0; padding: 0; display: flex; flex-direction: column;">
-    <div class="dashboard-container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <h3>Sales Agent Dashboard</h3>
-            </div>
-            <div class="sidebar-menu">
-                <a href="{% url 'allstock' %}" class="menu-item">
-                    <i class="fas fa-box"></i> View Stock
-                </a>
-
-                <a href="{% url 'deferredpayment' %}" class="menu-item">
-                    <i class="fas fa-shopping-cart"></i> Deferred Payment
-                </a>
-                <a href="{% url 'receipt' %}" class="menu-item">
-                    <i class="fas fa-file-invoice"></i> Receipts
-                </a>
-                <a href="{% url 'logout' %}" class="menu-item">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </div>
-        </div>
-
+{% block content %}
+<main style="height: 100%; margin: 0; padding: 0; display: flex; flex-direction: column; background: linear-gradient(to bottom right, #e8f5e9, #ffffff);">
+    <br><h2 style="text-align: center;">Sales Agent Dashboard</h2>
+    <div class="dashboard-container" style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff);">
         <!-- Main Content -->
-
         <div class="main-content">
             <!-- Stats Cards -->
             <div class="stats-container">
@@ -57,13 +27,16 @@
                         <p>UGX {{ total_sales|floatformat:0 }}</p>
                     </div>
                 </div>
-            </div>
+            </div>        
 
             <!-- Recent Activity -->
             <div class="recent-activity">
                 <div class="section-header">
                     <h2>Recent Sales</h2>
-                    <a href="{% url 'allsales' %}" class="view-all">View All</a>
+                    <a href="{% url 'allstock' %}" class="view-all"><button class="btn btn-success" style="color: gold;">Check Stock</button></a>
+                    <a href="{% url 'allsales' %}" class="view-all"><button class="btn btn-success" style="color: gold;">Add Sales</button></a>
+                    <a href="{% url 'receipt' %}" class="view-all"><button class="btn btn-success" style="color: gold;">View Receipts</button></a>
+                    <a href="{% url 'allsales' %}" class="view-all"><button class="btn btn-success" style="color: gold;">View All</button></a>
                 </div>
                 <div class="table-responsive">
                     <table class="table">
@@ -96,13 +69,5 @@
             </div>
         </div>
     </div>
-
-    <footer class="footer">
-        <div class="container text-center">
-            <p class="mb-0">
-                &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
-            </p>
-        </div>
-    </footer>
-</body>
-</html>
+</main>
+{% endblock%}

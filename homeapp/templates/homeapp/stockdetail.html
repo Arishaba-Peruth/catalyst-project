@@ -5,14 +5,15 @@
         <link rel="stylesheet" href="{% static 'stockdetail.css' %}">
         <br><br><br>
         <div>
-            <a href="{% url 'sell_item' stock.id %}"><input type="submit" value="Sell Item"></a>
-            <a href="{% url 'update_stock' stock.id %}"><input type="submit" value="Add Quantity"></a>
+            <a href="{% url 'sell_item' stock.id %}"><input type="submit" value="Sell Item" style="color: gold;"></a>
+            <a href="{% url 'update_stock' stock.id %}"><input type="submit" value="Add Quantity" style="color: gold;"></a>
         </div>
         <table border="1">
-            <thead>
+            <thead style="color: gold;">
                 <tr>
                     <th>Name of produce</th>
                     <th>Quantity</th>
+                    <th>Branch</th>
                     <th>Price</th>
                 </tr>
             </thead>
@@ -20,6 +21,7 @@
                 <tr>
                     <td>{{ stock.Name_of_produce }}</td>
                     <td>{{ stock.Tonnage_in_kgs }}</td>
+                    <td>{{ stock.Branch }}</td>
                     <td>{{ stock.Unit_price }}</td>
                 </tr>
             </tbody>

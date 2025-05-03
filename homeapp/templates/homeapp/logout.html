@@ -8,10 +8,10 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'bootstrap-5.3.5-dist/css/bootstrap.css' %}">
 </head>
-<body>
+<body style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff);">
     {% block content %}
     <br><br><br><br>
-    <div class="body container-fluid container">
+    <div class="body container-fluid container" style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff);">
         <h2 class="text-center">You have successfully logged out. Thanks </h2>
         <h6 class="text-center"><a href="{% url 'login' %}"><input type="submit" value="Login Again" class="btn btn-info btn-danger"></a></h6>
     </div>

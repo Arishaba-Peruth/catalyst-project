@@ -1,10 +1,18 @@
 {% extends 'homeapp/base.html' %}
 {% load static %}
 {% block content %}
+<main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
 <br><br>
-<link rel="stylesheet" href="{% static 'editcredit.css' %}">
-<main>
-    <h1>Edit Credit Transaction</h1>
+<link rel="stylesheet" href="{% static '' %}">
+<div>
+  {% if user.is_manager %}
+  <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
+  {% endif %}
+  {% if user.is_salesagent %}
+  <a href="{% url 'allsales' %}"><button class="btn btn-success">Previous</button></a>
+  {% endif %}
+</div>
+    <h1 style="text-align: center;">Edit Credit Transaction</h1>
     <form action="" method="POST">
         {% csrf_token %}
         <div class="mb-3">
@@ -67,15 +75,8 @@
             <input type="date" name="Date_of_dispatch" value="{{ edit_credit.Date_of_dispatch|date:'Y-m-d' }}" class="form-control">
           </div>
 
-          <button type="submit" class="btn btn-dark w-100">Edit Credit Transaction</button>
+          <button type="submit" class="btn btn-success" style="color: gold;">Edit Credit Transaction</button>
     </form>
-    <footer class="footer mt-auto py-3 text-white m-0" style="background-color: #2C2C2C;">
-      <div class="container text-center">
-          <p class="mb-0">
-              &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
-          </p>
-      </div>
-  </footer>
   
 </main>
 {% endblock %}

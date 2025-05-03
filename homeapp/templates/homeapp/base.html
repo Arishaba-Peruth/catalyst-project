@@ -23,7 +23,7 @@
       href="{% static 'bootstrap-5.3.5-dist/css/bootstrap.css' %}"
     />
   </head>
-  <body>
+  <body style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff)">
     <nav>
       <div class="wrapper">
         <div class="logo"><img src="{% static 'gro3.png' %}" alt="Logo" /></div>
@@ -39,8 +39,11 @@
           <label for="close-btn" class="btn close-btn"
             ><i class="fas fa-times"></i
           ></label>
-          <li><a href="/login" style="color: gold">Login</a></li>
+          {% if user.is_authenticated %}
           <li><a href="/logout" style="color: gold">Logout</a></li>
+          {% else %}
+          <li><a href="/login" style="color: gold">Login</a></li>
+          {% endif %}
         </ul>
         <label for="menu-btn" class="btn menu-btn"
           ><i class="fas fa-bars"></i
@@ -48,10 +51,13 @@
       </div>
     </nav>
 
+  <!-- Main Content -->
+
+
     {% block content %}
     <p>Page</p>
     {% endblock %}
-    <footer class="footer mt-auto py-3 text-white m-0" style="background-color: #2C2C2C;">
+    <br><footer class="footer mt-auto py-3 text-white m-0" style="background-color: #2C2C2C;">
       <div class="container text-center">
           <p class="mb-0">
               &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System

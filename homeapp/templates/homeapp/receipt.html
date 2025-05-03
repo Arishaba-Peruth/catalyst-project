@@ -1,9 +1,19 @@
 {% extends 'homeapp/base.html' %}
 {% load static %}
 {% block content %}
-<br><br><br><br>
+<main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
+    <br>
+    <div>
+        {% if user.is_manager %}
+        <a href="{% url 'manager' %}"><button class="btn btn-success">Back</button></a>
+        {% endif %}
+        {% if user.is_salesagent %}
+        <a href="{% url 'salesagent' %}"><button class="btn btn-success">Previous</button></a>
+        {% endif %}
+    </div>
+<br><br>
     {% for sale in sales %}
-        <div class="card">
+        <div class="card" style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff);">
             <div class="card-body">
                 <h3>
                     Customer: {{ sale.Name_of_buyer }}
@@ -16,16 +26,11 @@
                     <h6 class="card-text">
                         Change Collected: UGX {{ sale.get_change }}
                     </h6>
+                    
                     <a href="{% url 'receipt_detail' sale.id %}"><input type="submit" value="Final Receipt" class="btn btn-danger"></a>
                 </div>
             </div>
         </div>
     {% endfor %}
-    <footer class="footer mt-auto py-3 text-white m-0" style="background-color: #2C2C2C;">
-        <div class="container text-center">
-            <p class="mb-0">
-                &copy; {{ now|date:"Y" }} <span style="color: gold; font-weight: bold;">2025.Arishaba Peruth</span> — All Rights Reserved. Built with ❤️ for Karibu Grocery System
-            </p>
-        </div>
-    </footer>
+</main>
 {% endblock %}

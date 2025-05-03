@@ -2,14 +2,24 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<br><br><br><br>
-<link rel="stylesheet" href="{% static 'sellitem.css' %}">
+<main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff);">
+    <br><br>
+    <link rel="stylesheet" href="{% static 'sellitem.css' %}">
     <div>
         <form action="" method="POST">
             <h1>Sales Form</h1><br>
             {% csrf_token %}
             {{ sales_form | crispy }}
-            <br><input type="submit" class="btn btn-secondary">
+            <br><input type="submit" class="btn btn-secondary" style="color: gold;">
         </form>
     </div>
+    <div style="margin: 20px;">
+        {% if user.is_manager %}
+        <a href="{% url 'allstock' %}"><button class="btn btn-success">Back</button></a>
+        {% endif %}
+        {% if user.is_salesagent %}
+        <a href="{% url 'allstock' %}"><button class="btn btn-success">Previous</button></a>
+        {% endif %}
+    </div>
+</main>
 {% endblock %}

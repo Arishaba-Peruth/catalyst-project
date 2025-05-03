@@ -2,14 +2,16 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-<br><br><br><br>
-<link rel="stylesheet" href="{% static 'addstock.css' %}">
+<main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
+    <br><br><br><br>
+    <link rel="stylesheet" href="{% static '' %}">
+    <a href="{% url 'allstock' %}"><button class="btn btn-success">Back</button></a>
     <div class="container">
         <form action="" method="POST">
             <h1 class="text-center">ADD STOCK</h1><br>
             {% csrf_token %}
             {{ form | crispy}}
-            <br><input type="submit" class="btn btn-secondary btn">
-        </form>
-    </div>
+            <br><input type="submit" class="btn btn-success" style="color: gold;">
+        </form></div>
+</main>
 {% endblock %}
