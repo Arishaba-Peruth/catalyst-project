@@ -1,77 +1,74 @@
 {% extends 'homeapp/base.html' %}
 {% load static %}
 {% block content %}
-<body>
-        <!-- Main Content -->
-        <div class="main-content">
-            <h1 style="text-align: center;">Director's Dashboard</h1>
-            <!-- Stats Cards -->
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <h3>Credit Sales by Branch</h3>
-                        <div class="branch-details">
-                            {% for branch_name, amount in branch_deferred.items %}
-                            <div class="branch-row">
-                                <span class="details-branch-name">{{ branch_name }}:</span>
-                                <span class="amount">UGX {{ amount|floatformat:0 }}</span>
-                            </div>
-                            {% endfor %}
+<main style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff);">
+    <div class="main-content">
+        <h1 style="text-align: center;">Director's Dashboard</h1><br>
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card" style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div class="stat-info">
+                    <h3 style="color: #156c3d; margin-bottom: 15px;">Credit Sales by Branch</h3>
+                    <div class="branch-details">
+                        {% for branch_name, amount in branch_deferred.items %}
+                        <div class="branch-row" style="display: flex; justify-content: space-between; margin-bottom: 10px; padding: 8px; border-bottom: 1px solid #eee;">
+                            <span class="details-branch-name" style="color: #333; font-weight: 500;">{{ branch_name }}</span>
+                            <span class="amount" style="color: #156c3d; font-weight: bold;">UGX {{ amount|floatformat:0 }}</span>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <h3>Total Sales by Branch</h3>
-                        <div class="branch-details">
-                            {% for branch_name, amount in branch_sales.items %}
-                            <div class="branch-row">
-                                <span class="branch-name">{{ branch_name }}:</span>
-                                <span class="amount">UGX {{ amount|floatformat:0 }}</span>
-                            </div>
-                            {% endfor %}
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-
-            <!-- Recent Activity -->
-            <div class="recent-activity">
-                <div class="section-header">
-                    <h2><b>Recent Sales</b></h2>
-                </div>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Quantity (kg)</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for sale in recent_sales %}
-                            <tr>
-                                <td>{{ sale.Name_of_produce }}</td>
-                                <td>{{ sale.Tonnage_in_kgs }}</td>
-                                <td>UGX {{ sale.Amount_paid }}</td>
-                                <td>{{ sale.Date_time|date:"M d, Y" }}</td>
-                                <td>
-                                    <span class="status {% if sale.method_of_payment == 'Cash' %}paid{% else %}pending{% endif %}">
-                                        {{ sale.method_of_payment }}
-                                    </span>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            
+            <div class="stat-card" style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div class="stat-info">
+                    <h3 style="color: #156c3d; margin-bottom: 15px;">Total Sales by Branch</h3>
+                    <div class="branch-details">
+                        {% for branch_name, amount in branch_sales.items %}
+                        <div class="branch-row" style="display: flex; justify-content: space-between; margin-bottom: 10px; padding: 8px; border-bottom: 1px solid #eee;">
+                            <span class="branch-name" style="color: #333; font-weight: 500;">{{ branch_name }}</span>
+                            <span class="amount" style="color: #156c3d; font-weight: bold;">UGX {{ amount|floatformat:0 }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-  
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <div class="section-header">
+                <h2><b>Recent Sales</b></h2>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity (kg)</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sale in recent_sales %}
+                        <tr>
+                            <td>{{ sale.Name_of_produce }}</td>
+                            <td>{{ sale.Tonnage_in_kgs }}</td>
+                            <td>UGX {{ sale.Amount_paid }}</td>
+                            <td>{{ sale.Date_time|date:"M d, Y" }}</td>
+                            <td>
+                                <span class="status {% if sale.method_of_payment == 'Cash' %}paid{% else %}pending{% endif %}">
+                                    {{ sale.method_of_payment }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

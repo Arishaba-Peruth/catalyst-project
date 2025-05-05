@@ -3,7 +3,9 @@
 {% block content %}
 <main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
     <link rel="stylesheet" href="{% static '' %}">
+    {% if user.is_manager or user.is_manager_2 %}
     <br><a href="{% url 'createstock' %}" class="add-credit-btn"><button class="btn btn-success" style="color: gold;">Create Stock</button></a>
+    {% endif %}
     <h1 style="text-align: center;">Stock Status</h1><br>
     <div class="table-container">
         <table class="table table-bordered table-striped">

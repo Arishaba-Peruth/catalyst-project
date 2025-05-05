@@ -5,13 +5,18 @@ from datetime import datetime
 # Create your models here.
 class Userprofile(AbstractUser):
     is_director = models.BooleanField(default=False)
-    is_manager = models.BooleanField(default=False)
-    is_salesagent = models.BooleanField(default=False)
+    is_manager = models.BooleanField(default=False)  # For Maganjo branch
+    is_manager_2 = models.BooleanField(default=False)  # For Matugga branch
+    is_salesagent = models.BooleanField(default=False)  # For Maganjo branch
+    is_salesagent_2 = models.BooleanField(default=False)  # For Matugga branch
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=50)
     phone_number = models.IntegerField(blank=True, null=True)
     address = models.CharField(max_length=50)
     gender = models.CharField(blank=False)
+     
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return self.username
@@ -50,6 +55,7 @@ class Sale(models.Model):
     Tonnage_in_kgs = models.IntegerField(blank=False)
     #Unit_price = models.ForeignKey(Stock,on_delete=models.CASCADE, blank=True, null=True)
     Amount_paid = models.IntegerField(default=0,blank=False)
+    Branch = models.ForeignKey(Branch, blank=True, null=True, on_delete=models.CASCADE)
     Sales_agent_name = models.CharField(blank=False)
     Date_time = models.DateTimeField(auto_now_add=True)
     Name_of_buyer = models.CharField(blank=True)

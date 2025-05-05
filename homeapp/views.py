@@ -21,8 +21,30 @@ def index(request):
 # view for allstock page
 @login_required
 def allstock(request):
-    stocks = Stock.objects.all().order_by('-id')
-    return render(request, 'homeapp/allstock.html', {'stocks': stocks})
+    if request.user.is_manager or request.user.is_manager_2:
+        # Determine which branch to filter for
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        branch = Branch.objects.get(branch_name=branch_name)
+        stocks = Stock.objects.filter(Branch=branch).order_by('-id')
+        context = {
+            'stocks': stocks,
+            'branch_name': branch_name
+        }
+    elif request.user.is_salesagent or request.user.is_salesagent_2:
+        # Determine which branch to filter for salesagent
+        branch_name = 'Maganjo' if request.user.is_salesagent else 'Matugga'
+        branch = Branch.objects.get(branch_name=branch_name)
+        stocks = Stock.objects.filter(Branch=branch).order_by('-id')
+        context = {
+            'stocks': stocks,
+            'branch_name': branch_name
+        }
+    else:
+        stocks = Stock.objects.all().order_by('-id')
+        context = {
+            'stocks': stocks
+        }
+    return render(request, 'homeapp/allstock.html', context)
 
 # view for stock detail Page
 @login_required
@@ -32,16 +54,24 @@ def stock_detail(request, stock_id):
 
 @login_required
 def sell_item(request, pk):
-    # creating a variable sell_item and accessing all entries in the Stock model by there primary keys
-    sell_item = Stock.objects.get(id=pk)
+    # Get the stock item
+    sell_item = get_object_or_404(Stock, id=pk)
+    
+    # Check if manager can access this item's branch
+    if request.user.is_manager or request.user.is_manager_2:
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        if sell_item.Branch.branch_name != branch_name:
+            return HttpResponseForbidden("You do not have permission to sell items from this branch.")
 
-    # accessing our form from forms.py
-    sales_form = AddSaleForm(request.POST)
+    # Initialize form with POST data if POST request, otherwise empty form
+    sales_form = AddSaleForm(request.POST if request.method == 'POST' else None)
+    
     if request.method == 'POST':
         if sales_form.is_valid():
             new_sale = sales_form.save(commit=False)
-            new_sale.Name_of_produce = sell_item  # Set the foreign key to the Stock item
-            new_sale.item_name = sell_item.Name_of_produce  # Set the item name from the stock
+            new_sale.Name_of_produce = sell_item
+            new_sale.Branch = sell_item.Branch
+            new_sale.unit_price = sell_item.Unit_price
             
             # Get the quantity being sold
             issued_quantity = int(request.POST['Tonnage_in_kgs'])
@@ -60,12 +90,22 @@ def sell_item(request, pk):
             else:
                 # If not enough stock, add an error to the form
                 sales_form.add_error('Tonnage_in_kgs', 'Not enough stock available')
-                
-    return render(request, 'homeapp/sell_item.html', {'sales_form': sales_form})
+    
+    context = {
+        'sales_form': sales_form,
+        'sell_item': sell_item
+    }        
+    return render(request, 'homeapp/sell_item.html', context)
 
 @login_required
 def receipt(request):
-    sales = Sale.objects.all().order_by('-id')
+    if request.user.is_manager or request.user.is_manager_2:
+        # Determine which branch to filter for
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        branch = Branch.objects.get(branch_name=branch_name)
+        sales = Sale.objects.filter(Branch=branch).order_by('-id')
+    else:
+        sales = Sale.objects.all().order_by('-id')
     return render(request, 'homeapp/receipt.html', {'sales': sales})
 
 def Login(request):
@@ -78,9 +118,9 @@ def Login(request):
             login(request, user)
             if user.is_director:
                 return redirect('director')
-            elif user.is_manager:
+            elif user.is_manager or user.is_manager_2:  # Handle both manager types
                 return redirect('manager')
-            elif user.is_salesagent:
+            elif user.is_salesagent or user.is_salesagent_2:  # Handle both salesagent types
                 return redirect('salesagent')
             else:
                 messages.error(request, "Invalid user role")
@@ -105,15 +145,24 @@ def signup(request):
 
 @login_required
 def allsales(request):
-    all_transactions = Sale.objects.all().order_by('-id')
-    stocks = Stock.objects.all()  # Get all stocks for the modal
+    if request.user.is_manager or request.user.is_manager_2:
+        # Determine which branch to filter for
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        branch = Branch.objects.get(branch_name=branch_name)
+        all_transactions = Sale.objects.filter(Branch=branch).order_by('-id')
+        stocks = Stock.objects.filter(Branch=branch)  # Get stocks for this branch only
+    else:
+        all_transactions = Sale.objects.all().order_by('-id')
+        stocks = Stock.objects.all()
+
     paginator = Paginator(all_transactions, 5)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
         'page_obj': page_obj,
-        'stocks': stocks  # Add stocks to context
+        'stocks': stocks,  # This will now be filtered by branch for managers
+        'branch_name': branch_name if (request.user.is_manager or request.user.is_manager_2) else None
     }
     return render(request, 'homeapp/allsales.html', context)
 
@@ -176,12 +225,23 @@ def addsales(request, pk):
             
 @login_required
 def deferredpayment(request):
-    all_deferred_payments = Deferred_Payment.objects.all().order_by('-Due_date')
+    if request.user.is_manager or request.user.is_manager_2:
+        # Determine which branch to filter for
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        branch = Branch.objects.get(branch_name=branch_name)
+        all_deferred_payments = Deferred_Payment.objects.filter(Branch=branch).order_by('-Due_date')
+    else:
+        all_deferred_payments = Deferred_Payment.objects.all().order_by('-Due_date')
+    
     paginator = Paginator(all_deferred_payments, 5)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'homeapp/deferredpayment.html', {'page_obj': page_obj})
+    context = {
+        'page_obj': page_obj,
+        'branch_name': branch_name if (request.user.is_manager or request.user.is_manager_2) else None
+    }
+    return render(request, 'homeapp/deferredpayment.html', context)
 
 @login_required
 def add_deferredpayment(request):
@@ -189,13 +249,28 @@ def add_deferredpayment(request):
         form = AddDeferred_PaymentForm(request.POST)
         if form.is_valid():
             deferred_payment = form.save(commit=False)
+            
+            # If user is a manager, set the branch automatically
+            if request.user.is_manager or request.user.is_manager_2:
+                branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+                branch = Branch.objects.get(branch_name=branch_name)
+                deferred_payment.Branch = branch
+                
             deferred_payment.save()
             return redirect('deferredpayment')
     else:
         form = AddDeferred_PaymentForm()
     
-    stocks = Stock.objects.all()
-    branches = Branch.objects.all()
+    # Filter stocks and branches based on manager type
+    if request.user.is_manager or request.user.is_manager_2:
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        branch = Branch.objects.get(branch_name=branch_name)
+        stocks = Stock.objects.filter(Branch=branch)
+        branches = Branch.objects.filter(branch_name=branch_name)
+    else:
+        stocks = Stock.objects.all()
+        branches = Branch.objects.all()
+        
     context = {
         'form': form,
         'stocks': stocks,
@@ -207,6 +282,13 @@ def add_deferredpayment(request):
 @login_required
 def editsalespage(request, pk):
     tx_to_edit = Sale.objects.get(pk=pk)
+    
+    # Check if manager has access to this sale's branch
+    if request.user.is_manager or request.user.is_manager_2:
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        if tx_to_edit.Branch.branch_name != branch_name:
+            return HttpResponseForbidden("You do not have permission to edit sales from this branch.")
+    
     if request.method == 'POST':
         data = request.POST
         edited_produce_name = data.get('Name_of_produce')
@@ -230,9 +312,17 @@ def editsalespage(request, pk):
         tx_to_edit.save()
         return redirect('/view/' + str(tx_to_edit.pk))
     
+    # Filter stock list based on manager type
+    if request.user.is_manager or request.user.is_manager_2:
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        branch = Branch.objects.get(branch_name=branch_name)
+        stock_list = Stock.objects.filter(Branch=branch)
+    else:
+        stock_list = Stock.objects.all()
+    
     context = {
         "edit_details": tx_to_edit,
-        "stock_list": Stock.objects.all()
+        "stock_list": stock_list
     }
     return render(request, 'homeapp/edit.html', context)
 
@@ -251,7 +341,7 @@ def deteletransaction(request, pk):
     if request.method == 'POST':
         data = request.POST
         to_delete.delete()
-        return redirect('/')
+        return redirect('allsales')
     
     context = {
         "details": to_delete
@@ -260,16 +350,27 @@ def deteletransaction(request, pk):
 
 @login_required
 def receipt_detail(request, receipt_id):
-    receipt = Sale.objects.get(id=receipt_id)
+    receipt = get_object_or_404(Sale, id=receipt_id)
+    
+    # Check if manager has access to this receipt's branch
+    if request.user.is_manager or request.user.is_manager_2:
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        if receipt.Branch.branch_name != branch_name:
+            return HttpResponseForbidden("You do not have permission to view receipts from this branch.")
+            
     return render(request, 'homeapp/receipt_detail.html', {'receipt': receipt})
 
 @login_required
 def manager(request):
-    if not request.user.is_manager:
+    if not (request.user.is_manager or request.user.is_manager_2):
         return HttpResponseForbidden("You do not have permission to access this page.")
+    
+    # Determine which branch to filter for
+    branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+    branch = Branch.objects.get(branch_name=branch_name)
 
-    # Get all stock items grouped by product name
-    all_stocks = Stock.objects.all()
+    # Get stock items for this branch only
+    all_stocks = Stock.objects.filter(Branch=branch)
     
     # Create a dictionary to group stocks by product name
     grouped_stocks = {}
@@ -281,7 +382,6 @@ def manager(request):
                 'total_quantity': 0
             }
         
-        branch_name = stock.Branch.branch_name if stock.Branch else 'Unassigned'
         if branch_name not in grouped_stocks[stock.Name_of_produce]['branches']:
             grouped_stocks[stock.Name_of_produce]['branches'][branch_name] = 0
         grouped_stocks[stock.Name_of_produce]['branches'][branch_name] += stock.Tonnage_in_kgs
@@ -290,23 +390,31 @@ def manager(request):
     # Convert dictionary to list for template
     combined_stocks = list(grouped_stocks.values())
     
-    # Get recent sales, limited to last 10
-    recent_sales = Sale.objects.all().order_by('-Date_time')[:4]
+    # Get recent sales for this branch only
+    recent_sales = Sale.objects.filter(Branch=branch).order_by('-Date_time')[:4]
     
-    # Get low stock items (less than 100kg)
-    low_stock_items = Stock.objects.filter(Tonnage_in_kgs__lt=100)
+    # Get low stock items for this branch only
+    low_stock_items = Stock.objects.filter(Branch=branch, Tonnage_in_kgs__lt=100)
     
     context = {
         'combined_stocks': combined_stocks,
         'recent_sales': recent_sales,
         'low_stock_items': low_stock_items,
+        'branch_name': branch_name,
     }
     
     return render(request, 'homeapp/dashboard1.html', context)
 
 @login_required
 def viewcredit(request, pk):
-    credit = Deferred_Payment.objects.get(pk=pk)
+    credit = get_object_or_404(Deferred_Payment, pk=pk)
+    
+    # Check if manager has access to this credit's branch
+    if request.user.is_manager or request.user.is_manager_2:
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        if credit.Branch.branch_name != branch_name:
+            return HttpResponseForbidden("You do not have permission to view credits from this branch.")
+            
     context = {
         "creditdetails": credit
     }
@@ -314,7 +422,14 @@ def viewcredit(request, pk):
 
 @login_required
 def editcredit(request, pk):
-    credit_to_edit = Deferred_Payment.objects.get(pk=pk)
+    credit_to_edit = get_object_or_404(Deferred_Payment, pk=pk)
+    
+    # Check if manager has access to this credit's branch
+    if request.user.is_manager or request.user.is_manager_2:
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        if credit_to_edit.Branch.branch_name != branch_name:
+            return HttpResponseForbidden("You do not have permission to edit credits from this branch.")
+    
     if request.method == 'POST':
         data = request.POST
         contact = data.get('Contact')
@@ -359,46 +474,68 @@ def deletecredit(request, pk):
 
 @login_required
 def createstock(request):
-    if not request.user.is_manager:
+    if not (request.user.is_manager or request.user.is_manager_2):
         return HttpResponseForbidden("You do not have permission to access this page.")
+        
     if request.method == 'POST':
         form = AddStockForm(request.POST)
         if form.is_valid():
-            form.save()
+            stock = form.save(commit=False)
+            # Set the branch based on manager type
+            branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+            branch = Branch.objects.get(branch_name=branch_name)
+            stock.Branch = branch
+            stock.save()
             return redirect('allstock')
     else:
         form = AddStockForm()
-    
-    return render(request, 'homeapp/createstock.html', {'form': form})
+        
+    # Get the branch name for context
+    branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+    return render(request, 'homeapp/createstock.html', {
+        'form': form,
+        'branch_name': branch_name
+    })
 
 @login_required
 def salesagent(request):
-    if not request.user.is_salesagent:
+    if not (request.user.is_salesagent or request.user.is_salesagent_2):
         return HttpResponseForbidden("You do not have permission to access this page.")
-    # Get total deferred payments amount
-    deferred_payments = Deferred_Payment.objects.all()
-    total_deferred = deferred_payments.aggregate(total=Sum('Amount_due'))['total'] or 0
     
-    # Get total sales amount
-    all_sales = Sale.objects.all()
-    total_sales = all_sales.aggregate(total=Sum('Amount_paid'))['total'] or 0
+    # Determine which branch to filter for
+    branch_name = 'Maganjo' if request.user.is_salesagent else 'Matugga'
+    branch = Branch.objects.get(branch_name=branch_name)
     
-    # Get recent sales limited to 10
-    recent_sales = Sale.objects.all().order_by('-Date_time')[:10]
+    # Get stock items for this branch only
+    stock_items = Stock.objects.filter(Branch=branch)
+    
+    # Get sales for this branch only
+    sales = Sale.objects.filter(Branch=branch).order_by('-Date_time')[:5]
+    
+    # Calculate total sales amount for this branch
+    total_sales = Sale.objects.filter(Branch=branch).aggregate(
+        total=Sum('Amount_paid')
+    )['total'] or 0
+    
+    # Calculate total deferred payments for this branch
+    total_deferred = Deferred_Payment.objects.filter(Branch=branch).aggregate(
+        total=Sum('Amount_due')
+    )['total'] or 0
     
     context = {
-        'deferred_payments': deferred_payments,
-        'total_deferred': total_deferred,
+        'stock_items': stock_items,
+        'sales': sales,
+        'branch_name': branch_name,
         'total_sales': total_sales,
-        'sales': recent_sales,  # for the recent sales table
+        'total_deferred': total_deferred
     }
-    
     return render(request, 'homeapp/dashboard2.html', context)
 
 @login_required
 def director(request):
     if not request.user.is_director:
         return HttpResponseForbidden("You do not have permission to access this page.")
+    
     # Calculate branch-wise deferred payments
     branches = Branch.objects.all()
     branch_deferred = {}
@@ -470,12 +607,23 @@ def allsales(request):
 
 # view for all deferred payments with pagination to allow only 5 transactions per page
 def deferredpayment(request):
-    all_deferred_payments = Deferred_Payment.objects.all().order_by('-Due_date')
+    if request.user.is_manager or request.user.is_manager_2:
+        # Determine which branch to filter for
+        branch_name = 'Maganjo' if request.user.is_manager else 'Matugga'
+        branch = Branch.objects.get(branch_name=branch_name)
+        all_deferred_payments = Deferred_Payment.objects.filter(Branch=branch).order_by('-Due_date')
+    else:
+        all_deferred_payments = Deferred_Payment.objects.all().order_by('-Due_date')
+    
     paginator = Paginator(all_deferred_payments, 5)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'homeapp/deferredpayment.html', {'page_obj': page_obj})
+    context = {
+        'page_obj': page_obj,
+        'branch_name': branch_name if (request.user.is_manager or request.user.is_manager_2) else None
+    }
+    return render(request, 'homeapp/deferredpayment.html', context)
 
 
 

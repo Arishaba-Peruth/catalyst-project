@@ -21,13 +21,21 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #view for landing page--------------
     path('', views.index, name='index'),
+    #view for all stock page-------------------
     path('allstock/', views.allstock, name='allstock'),
+    #view for all stock detail page//////////////
     path('home/<int:stock_id>/', views.stock_detail, name='stock_detail'),
+    #view for all sell or issue out  page------------
     path('sell_item/<str:pk>/',views.sell_item, name='sell_item'),
+    #view for all receipts page//////////////////
     path('receipt/',views.receipt, name='receipt'),
+    #view for all login page---------------------
     path('login/', views.Login, name='login'),
+    #view for allsales page\\\\\\\\\\\\\\\\\\
     path('allsales/', views.allsales, name='allsales'),
+    #view for all add stock page------------------
     path('addstock/', views.addstock, name='addstock'),
     path('addstock/<str:pk>/', views.addstock, name='update_stock'),
     path('addsales/<int:pk>/', views.addsales, name='addsales'),

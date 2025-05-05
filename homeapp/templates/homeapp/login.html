@@ -24,6 +24,9 @@
             {{ error }}
           </div>
         {% endif %}
+        {% if error_message %}
+        <div class="error_message" style="color: red;">{{ error_message }}</div>
+        {% endif %}
         {% csrf_token %}
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>

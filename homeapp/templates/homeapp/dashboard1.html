@@ -7,7 +7,7 @@
         <div class="main-content">
             <!-- Stats Cards -->
             <br>
-            <h2 style="text-align: center;">Manager's Dashboard</h2><br>
+            <h2 style="text-align: center;">Manager's Dashboard-{{ branch_name }}Branch</h2><br>
             <div class="stats-container">
                 <div class="stat-card">
                     <div class="stat-icon">
@@ -41,7 +41,7 @@
             <div class="recent-activity">
                 <div class="section-header">
                     <h2>Recent Sales</h2>
-                    <a href="{% url 'allsales' %}" class="view-all"><button class="btn btn-success" style="color: gold;">Add Sales</button></a>
+                    <a href="{% url 'allsales' %}" class="view-all"><button class="btn btn-success" style="color: gold;">+Add Sales</button></a>
                     <a href="{% url 'receipt' %}" class="view-all"><button class="btn btn-success" style="color: gold;">View Receipts</button></a>
                     <a href="{% url 'allsales' %}" class="view-all"><button class="btn btn-success" style="color: gold;">View All</button></a>
                 </div>

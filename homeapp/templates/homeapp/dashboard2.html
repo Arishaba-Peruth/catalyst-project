@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <main style="height: 100%; margin: 0; padding: 0; display: flex; flex-direction: column; background: linear-gradient(to bottom right, #e8f5e9, #ffffff);">
-    <br><h2 style="text-align: center;">Sales Agent Dashboard</h2>
+    <br><h2 style="text-align: center;">Sales Agent Dashboard - {{ branch_name }} Branch</h2>
     <div class="dashboard-container" style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff);">
         <!-- Main Content -->
         <div class="main-content">
@@ -13,7 +13,7 @@
                         <i class="fas fa-archive"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>Total Deferred Amount</h3>
+                        <h3>{{ branch_name }} Branch Deferred Amount</h3>
                         <p>UGX {{ total_deferred|floatformat:0 }}</p>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                         <i class="fas fa-shopping-bag"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>Total Sales Amount</h3>
+                        <h3>{{ branch_name }} Branch Sales Amount</h3>
                         <p>UGX {{ total_sales|floatformat:0 }}</p>
                     </div>
                 </div>
