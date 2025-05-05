@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 <main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
-<br><br>
 <link rel="stylesheet" href="{% static '' %}">
 <div>
   {% if user.is_manager %}
@@ -76,7 +75,14 @@
           </div>
 
           <button type="submit" class="btn btn-success" style="color: gold;">Edit Credit Transaction</button>
-    </form>
-  
+    </form><br>
+    <div>
+      {% if user.is_manager or user.is_manager_2 %}
+      <a href="{% url 'deferredpayment' %}"><button class="btn btn-success">Back</button></a>
+      {% endif %}
+      {% if user.is_salesagent %}
+      <a href="{% url 'deferredpayment' %}"><button class="btn btn-success">Previous</button></a>
+      {% endif %}
+  </div>
 </main>
 {% endblock %}

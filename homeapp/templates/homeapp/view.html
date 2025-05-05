@@ -54,7 +54,7 @@
         </div>
     </div>
     <br><div>
-        {% if user.is_manager %}
+        {% if user.is_manager or user.is_manager_2 %}
         <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
         {% endif %}
         {% if user.is_salesagent %}

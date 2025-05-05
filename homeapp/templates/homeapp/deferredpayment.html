@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
     <link rel="stylesheet" href="{% static '' %}">
-    <br><br>
     <main style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
         <div class="deferred-header">
             <h1 style="text-align: center;">Credit Sales Records</h1>
@@ -74,7 +73,7 @@
             </div>
         </div>
         <div>
-            {% if user.is_manager %}
+            {% if user.is_manager or user.is_manager_2 %}
             <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
             {% endif %}
             {% if user.is_salesagent %}

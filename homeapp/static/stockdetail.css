@@ -1,56 +1,50 @@
-main {
-    padding: 2rem;
-    background: linear-gradient(to bottom right, #e8f5e9, #ffffff);
-    min-height: 80vh;
-    font-family: 'Poppins', sans-serif;
-    color: #2e7d32; /* dark green */
-}
-div {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    justify-content: center;
-}
-div a input[type="submit"] {
-    background-color: #2e7d32;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    color: white;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    font-size: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-div a input[type="submit"]:hover {
-    background-color: #1b5e20;
-    transform: translateY(-2px);
-}
-table {
-    width: 90%;
-    margin: 0 auto;
-    border-collapse: collapse;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    background-color: white;
-    border-radius: 10px;
+/* Unique table styling */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
+    border-radius: 12px;
 }
-table thead {
-    background-color: #2e7d32;
-    color: white;
+
+/* Table header */
+.table thead {
+    background: #2C2C2C;
+    color: gold;
+    text-transform: uppercase;
 }
-table th, table td {
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
+
+.table th, .table td {
+    padding: 16px;
+    border: 1px solid #eee;
 }
-table tbody tr:hover {
-    background-color: #f1f8e9;
+
+/* Zebra striping */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
 }
-table th:first-child, table td:first-child {
-    border-top-left-radius: 10px;
+
+/* Hover effect */
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-table th:last-child, table td:last-child {
-    border-top-right-radius: 10px;
+
+/* Rounded corners on first and last header cells */
+.table thead th:first-child {
+    border-top-left-radius: 12px;
+}
+.table thead th:last-child {
+    border-top-right-radius: 12px;
+}
+
+/* Responsive enhancement */
+@media (max-width: 768px) {
+    .table th, .table td {
+        font-size: 14px;
+        padding: 12px;
+    }
 }

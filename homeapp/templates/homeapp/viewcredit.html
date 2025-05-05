@@ -1,9 +1,9 @@
 {% extends 'homeapp/base.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static '' %}">
+<link rel="stylesheet" href="{% static 'viewcredit.css' %}">
 <main style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
-    <h1>Credit Details</h1>
+    <h1 style="text-align: center;">Credit Details</h1>
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
@@ -37,7 +37,7 @@
         </tbody>
     </table>
     <div>
-        {% if user.is_manager %}
+        {% if user.is_manager or user.is_manager_2 %}
         <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
         {% endif %}
         {% if user.is_salesagent %}

@@ -2,16 +2,25 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<link rel="stylesheet" href="{% static '' %}">
-<br><br><br>
+<link rel="stylesheet" href="{% static 'add_deferred.css' %}">
+<br>
 <main>
     <div class="container">
-        <h1>Add Credit Sale</h1>
+        <h1 style="text-align: center;">Add Credit Sale</h1>
         <form method="POST">
             {% csrf_token %}
             {{ form | crispy }}
-            <button type="submit" class="btn btn-success">Add Credit Sale</button>
+            <br><button type="submit" class="btn btn-success" style="color: gold;">Add Credit Sale</button>
         </form>
+    </div>
+
+    <div style="margin: 20px;">
+        {% if user.is_manager or user.is_manager_2 %}
+        <a href="{% url 'deferredpayment' %}"><button class="btn btn-success">Back</button></a>
+        {% endif %}
+        {% if user.is_salesagent %}
+        <a href="{% url 'deferredpayment' %}"><button class="btn btn-success">Previous</button></a>
+        {% endif %}
     </div>
 </main>
 {% endblock %}

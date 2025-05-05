@@ -1,61 +1,43 @@
-/* Center the content and make it responsive */
-body {
-    background-color: #f5f8fa;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 15px;
-}
-
-.container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    width: 100%;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #333;
-    font-size: 28px;
-}
-
-/* Style the submit button */
-.submit-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 24px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 20px;
-    transition: background-color 0.3s ease;
-}
-
-.submit-btn:hover {
-    background-color: #45a049;
-}
-
-/* Crispy form fields adjustments */
-.form-group {
+/* Style the heading */
+.container h1 {
+    font-size: 24px;
+    color: #2C2C2C;
     margin-bottom: 20px;
 }
 
-input,
-select,
-textarea {
-    border-radius: 8px !important;
-    padding: 10px !important;
-    border: 1px solid #ccc !important;
-    width: 100% !important;
-    box-sizing: border-box;
+/* Style all input, select, and textarea */
+.container input,
+.container select,
+.container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* Focus state for fields */
+.container input:focus,
+.container select:focus,
+.container textarea:focus {
+    border-color: #28a745;
+    outline: none;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.2);
+}
+
+/* Button styling (already styled via Bootstrap) */
+.container .btn-success {
+    background-color: #28a745;
+    color: gold;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 10px 20px;
+    transition: background 0.3s ease;
+}
+
+.container .btn-success:hover {
+    background-color: #218838;
+    color: #ffd700;
 }

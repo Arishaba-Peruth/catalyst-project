@@ -4,10 +4,10 @@
 <main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
     <br>
     <div>
-        {% if user.is_manager %}
+        {% if user.is_manager or user.is_manager_2 %}
         <a href="{% url 'manager' %}"><button class="btn btn-success">Back</button></a>
         {% endif %}
-        {% if user.is_salesagent %}
+        {% if user.is_salesagent or user.is_salesagent_2 %}
         <a href="{% url 'salesagent' %}"><button class="btn btn-success">Previous</button></a>
         {% endif %}
     </div>

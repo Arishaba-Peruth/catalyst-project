@@ -6,7 +6,7 @@
     {% if user.is_manager or user.is_manager_2 %}
     <br><a href="{% url 'createstock' %}" class="add-credit-btn"><button class="btn btn-success" style="color: gold;">Create Stock</button></a>
     {% endif %}
-    <h1 style="text-align: center;">Stock Status</h1><br>
+    <h1 style="text-align: center;">Stock Status - {{ branch_name }} Branch</h1><br>
     <div class="table-container">
         <table class="table table-bordered table-striped">
             <thead>
@@ -34,10 +34,10 @@
         </table>
     </div>
     <div>
-        {% if user.is_manager %}
+        {% if user.is_manager or user.is_manager_2 %}
         <a href="{% url 'manager' %}"><button class="btn btn-success">Back</button></a>
         {% endif %}
-        {% if user.is_salesagent %}
+        {% if user.is_salesagent or user.is_salesagent_2 %}
         <a href="{% url 'salesagent' %}"><button class="btn btn-success">Previous</button></a>
         {% endif %}
     </div>

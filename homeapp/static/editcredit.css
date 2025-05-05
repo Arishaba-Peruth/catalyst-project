@@ -1,97 +1,34 @@
-/* Form Container Styling */
-main {
-    max-width: 800px;
+/* Container styling */
+.container {
+    max-width: 600px;
     margin: 40px auto;
-    background: #fff;
-    padding: 30px 40px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    flex: 1; /* ✅ This ensures footer stays at bottom */
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-
-/* Heading Style */
-main h1 {
-    font-size: 28px;
+/* Heading style */
+.container h1 {
+    font-size: 26px;
     color: #2C2C2C;
-    text-align: center;
-    margin-bottom: 30px;
-    position: relative;
-}
-
-main h1::after {
-    content: "";
-    display: block;
-    width: 60px;
-    height: 3px;
-    background-color: gold;
-    margin: 10px auto 0;
-    border-radius: 2px;
-}
-
-/* Label Styling */
-form .form-label {
-    font-weight: 600;
-    color: #2C2C2C;
-    margin-bottom: 5px;
-}
-
-/* Input Fields */
-form .form-control {
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    padding: 10px 12px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-form .form-control:focus {
-    border-color: gold;
-    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
-    outline: none;
-}
-
-/* Form Groups */
-form .mb-3 {
     margin-bottom: 20px;
+    font-weight: bold;
 }
 
-/* Submit Button */
-form .btn {
-    background-color: #2C2C2C;
+/* Button styling */
+.btn-success {
+    background-color: #28a745;
     color: gold;
     font-weight: bold;
+    padding: 10px 16px;
     border: none;
-    padding: 12px;
-    border-radius: 8px;
+    border-radius: 6px;
     transition: background-color 0.3s ease;
 }
 
-form .btn:hover {
-    background-color: #1a1a1a;
+.btn-success:hover {
+    background-color: #218838;
     color: #ffd700;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    main {
-        padding: 20px;
-    }
-}
-
-/* Ensure page uses full height */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Footer always at the bottom */
-footer.footer {
-    margin-top: auto;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
 }
