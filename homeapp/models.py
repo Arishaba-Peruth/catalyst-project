@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 
 # Create your models here.
+#model for user profile
 class Userprofile(AbstractUser):
     is_director = models.BooleanField(default=False)
     is_manager = models.BooleanField(default=False)  # For Maganjo branch
@@ -22,14 +23,15 @@ class Userprofile(AbstractUser):
         return self.username
     
     
-    
+#model for Branch 
 class Branch(models.Model):
     #location = models.ForeignKey(Category,null=True, blank=True, on_delete=models.CASCADE)
     branch_name = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return self.branch_name
-
+    
+#model for produce or stock
 class Stock(models.Model):
     Name_of_produce = models.CharField(max_length=100, null=True)
     Produce_type = models.CharField(choices=[("Internal","Internal"), ("External","External")] ,blank=True, null=True)
@@ -49,6 +51,7 @@ class Stock(models.Model):
         return self.Name_of_produce
     
 
+#model for sales
 class Sale(models.Model):
     Name_of_produce = models.ForeignKey(Stock, blank=True, null=True, on_delete=models.CASCADE)
     item_name = models.CharField(blank=True, null=True)
@@ -72,7 +75,7 @@ class Sale(models.Model):
     def __str__(self):
         return self.Name_of_buyer
     
-
+#model for sales on credit
 class Deferred_Payment(models.Model):
     Name_of_buyer = models.CharField(blank=True, null=True)
     Nin = models.CharField(blank=False, unique=True)

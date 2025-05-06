@@ -14,11 +14,11 @@ from django.core.paginator import Paginator
 
 
 # Create your views here.
-# view for welcoming page
+# view for welcoming page-------------------
 def index(request):
     return render(request, 'homeapp/index.html')
 
-# view for allstock page
+# view for allstock page-----------------------
 @login_required
 def allstock(request):
     if request.user.is_manager or request.user.is_manager_2:
@@ -46,12 +46,13 @@ def allstock(request):
         }
     return render(request, 'homeapp/allstock.html', context)
 
-# view for stock detail Page
+# view for stock detail Page----------------
 @login_required
 def stock_detail(request, stock_id):
     stock = Stock.objects.get(id=stock_id)
     return render(request, 'homeapp/stockdetail.html', {'stock': stock})
 
+#view for selling item page--------------
 @login_required
 def sell_item(request, pk):
     # Get the stock item
@@ -97,6 +98,7 @@ def sell_item(request, pk):
     }        
     return render(request, 'homeapp/sell_item.html', context)
 
+# view for all receipts page-------------------
 @login_required
 def receipt(request):
     if request.user.is_manager or request.user.is_manager_2:
@@ -113,6 +115,7 @@ def receipt(request):
         sales = Sale.objects.all().order_by('-id')
     return render(request, 'homeapp/receipt.html', {'sales': sales})
 
+#view for login page-------------------
 def Login(request):
     if request.method == 'POST':
         username = request.POST['Username']
@@ -134,7 +137,7 @@ def Login(request):
                     
     return render(request, 'homeapp/login.html')
 
-# view for signup page
+# view for signup page------------------------
 def signup(request):
     if request.method == 'POST':
         form = UserCreation(request.POST)
@@ -148,6 +151,7 @@ def signup(request):
     
     return render(request, 'homeapp/signup.html', {'form': form})
 
+#view for all sales page-------------------
 @login_required
 def allsales(request):
     if request.user.is_manager or request.user.is_manager_2:

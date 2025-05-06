@@ -17,7 +17,7 @@
         {% if user.is_manager or user.is_manager_2 %}
         <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
         {% endif %}
-        {% if user.is_salesagent %}
+        {% if user.is_salesagent or user.is_salesagent_2 %}
         <a href="{% url 'allsales' %}"><button class="btn btn-success">Previous</button></a>
         {% endif %}
     </div>

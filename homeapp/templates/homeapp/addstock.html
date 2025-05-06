@@ -8,7 +8,7 @@
     <a href="{% url 'allstock' %}"><button class="btn btn-success">Back</button></a>
     <div class="container">
         <form action="" method="POST">
-            <h1 class="text-center">ADD STOCK</h1><br>
+            <h1 class="text-center" style="color: #2C2C2C; font-weight: 600;">ADD STOCK QUANTITY</h1><br>
             {% csrf_token %}
             {{ form | crispy}}
             <br><input type="submit" class="btn btn-success" style="color: gold;">

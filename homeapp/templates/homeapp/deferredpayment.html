@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{% static '' %}">
     <main style="background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
         <div class="deferred-header">
-            <h1 style="text-align: center;">Credit Sales Records</h1>
+            <h1 class="text-center" style="color: #2C2C2C; font-weight: 600;">Credit Transactions</h1>
             <a href="{% url 'add_deferredpayment' %}" class="add-credit-btn"><button class="btn btn-success" style="color: gold;">Add New Credit Sale</button></a>
         </div><br>
         <div class="credit-table-wrapper">
@@ -76,7 +76,7 @@
             {% if user.is_manager or user.is_manager_2 %}
             <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
             {% endif %}
-            {% if user.is_salesagent %}
+            {% if user.is_salesagent or user.is_salesagent_2 %}
             <a href="{% url 'allsales' %}"><button class="btn btn-success">Previous</button></a>
             {% endif %}
         </div>

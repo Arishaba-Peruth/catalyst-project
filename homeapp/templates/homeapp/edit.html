@@ -3,7 +3,7 @@
 {% block content %}
 <link rel="stylesheet" href="{% static '' %}" />
 <div class="container mt-9 pt-9">  <!-- Increased margin -->
-  <br><br><h1 class="mb-4 text-center">Edit Transaction</h1>
+  <br><br><h1 class="text-center" style="color: #2C2C2C; font-weight: 600;">Edit Transaction</h1>
   <form method="POST" class="p-4 border rounded shadow bg-light">
     {% csrf_token %}
     
@@ -65,7 +65,7 @@
   {% if user.is_manager or user.is_manager_2 %}
   <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
   {% endif %}
-  {% if user.is_salesagent %}
+  {% if user.is_salesagent or user.is_salesagent_2 %}
   <a href="{% url 'allsales' %}"><button class="btn btn-success">Previous</button></a>
   {% endif %}
 </div>

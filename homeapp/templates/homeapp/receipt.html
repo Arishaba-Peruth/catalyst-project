@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 <main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
+    <link rel="stylesheet" href="{% static 'receipt.css' %}">
     <br>
     <div>
         {% if user.is_manager or user.is_manager_2 %}
@@ -21,13 +22,13 @@
                 <h6>Item: {{ sale.Name_of_produce }}</h6>
                 <h6>Amount: {{ sale.Amount_paid }}</h6>
                 <h6>Quantity: {{ sale.Tonnage_in_kgs }}</h6>
-                <h2>Total Price: UGX {{ sale.get_amount_paid }}</h2>
+                <h4>Total Price: UGX {{ sale.get_amount_paid }}</h4>
                 <div style="flex: 1">
-                    <h6 class="card-text">
+                    <h5 class="card-text">
                         Change Collected: UGX {{ sale.get_change }}
-                    </h6>
+                    </h5>
                     
-                    <a href="{% url 'receipt_detail' sale.id %}"><input type="submit" value="Final Receipt" class="btn btn-danger"></a>
+                    <a href="{% url 'receipt_detail' sale.id %}"><button type="submit"  class="btn btn-danger" style="color: gold;">Final Receipt</button></a>
                 </div>
             </div>
         </div>

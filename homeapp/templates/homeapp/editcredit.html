@@ -4,14 +4,7 @@
 <main style=" background: linear-gradient(to bottom right, #e8f5e9, #ffffff); margin: 20px;">
 <link rel="stylesheet" href="{% static '' %}">
 <div>
-  {% if user.is_manager %}
-  <a href="{% url 'allsales' %}"><button class="btn btn-success">Back</button></a>
-  {% endif %}
-  {% if user.is_salesagent %}
-  <a href="{% url 'allsales' %}"><button class="btn btn-success">Previous</button></a>
-  {% endif %}
-</div>
-    <h1 style="text-align: center;">Edit Credit Transaction</h1>
+<h1 class="text-center" style="color: #2C2C2C; font-weight: 600;">Edit Credit Transaction</h1>
     <form action="" method="POST">
         {% csrf_token %}
         <div class="mb-3">
@@ -80,7 +73,7 @@
       {% if user.is_manager or user.is_manager_2 %}
       <a href="{% url 'deferredpayment' %}"><button class="btn btn-success">Back</button></a>
       {% endif %}
-      {% if user.is_salesagent %}
+      {% if user.is_salesagent or user.is_salesagent_2 %}
       <a href="{% url 'deferredpayment' %}"><button class="btn btn-success">Previous</button></a>
       {% endif %}
   </div>
